@@ -3,14 +3,25 @@ import DropdownListItem from './DropdownListItem';
 
 export default class DropdownList extends Component {
     render() {
-        const filterText = this.props.filterText;
+        const filterText = this.props.filterText.toLowerCase();
 
-        const dropdownListItems = this.props.countries.filter(country => {
-            return country.name.indexOf(filterText) !== -1;
+        let compare = (a,b) => {
+            if (a.name < b.name) {
+                return -1;
+            }
+            if (a.name > b.name) {
+                return 1;
+            }
+            return 0;
+        };
+
+        const sortedDropdownListItems = this.props.countries.sort(compare);
+        const filteredDropdownListItems = sortedDropdownListItems.filter(country => {
+            return country.name.toLowerCase().indexOf(filterText) !== -1;
 
         });
 
-        const filteredDropdownListItems = dropdownListItems.map(country =>
+        const filteredDropdownListItemsElements = filteredDropdownListItems.map(country =>
             <li key = {country.code}>
                 <DropdownListItem country = {country} />
             </li>
@@ -18,7 +29,7 @@ export default class DropdownList extends Component {
 
         return (
             <ul>
-                {filteredDropdownListItems}
+                {filteredDropdownListItemsElements}
             </ul>
 
         )
