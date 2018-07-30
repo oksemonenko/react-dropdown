@@ -1,10 +1,13 @@
 export default [
+    {name: 'Yemen', code: 'YE'},
+    {name: 'Zambia', code: 'ZM'},
+    {name: 'Zimbabwe', code: 'ZW'},
     {name: 'Afghanistan', code: 'AF'},
-    {name: 'Åland Islands', code: 'AX'},
+    {name: 'Aland Islands', code: 'AX'},
     {name: 'Albania', code: 'AL'},
     {name: 'Algeria', code: 'DZ'},
     {name: 'American Samoa', code: 'AS'},
-    {name: 'AndorrA', code: 'AD'},
+    {name: 'Andorra', code: 'AD'},
     {name: 'Angola', code: 'AO'},
     {name: 'Anguilla', code: 'AI'},
     {name: 'Antarctica', code: 'AQ'},
@@ -239,7 +242,4 @@ export default [
     {name: 'Virgin Islands, U.S.', code: 'VI'},
     {name: 'Wallis and Futuna', code: 'WF'},
     {name: 'Western Sahara', code: 'EH'},
-    {name: 'Yemen', code: 'YE'},
-    {name: 'Zambia', code: 'ZM'},
-    {name: 'Zimbabwe', code: 'ZW'}
 ]
