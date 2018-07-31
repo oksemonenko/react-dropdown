@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 
 export default class DropdownListItem extends Component {
     render() {
-        const {country} = this.props;
+        const {option} = this.props;
         return (
-            <div>{country.name}</div>
+            <div>{option.name}</div>
         )
     }
 }
