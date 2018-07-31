@@ -10,36 +10,66 @@ export default class Dropdown extends Component {
             filterText: '',
             selectedOption: null,
             placeholder: 'Выберите страну',
-            active: false
+            active: false,
+            upward: false
         };
-
-        this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
-        this.handleOptionChange = this.handleOptionChange.bind(this);
-        this.handlePlaceholderChange = this.handlePlaceholderChange.bind(this);
     }
 
-    handleFilterTextChange(filterText) {
+    handleFilterTextChange = (filterText) => {
         this.setState({
             filterText: filterText
         })
-    }
+    };
 
-    handleOptionChange(selectedOption) {
+    handleOptionChange = (selectedOption) => {
         this.setState({
-            selectedOption: selectedOption,
-            active: false
-        })
-    }
+            selectedOption: selectedOption
+        });
+        this.hideDropdownList();
+    };
 
-    handlePlaceholderChange() {
+    handlePlaceholderChange = () => {
         this.setState({
             placeholder: ''
-        })
-    }
+        });
+        this.showDropdownList();
+    };
+
+    showDropdownList = () => {
+        this.setState({
+            active: true
+        });
+
+        this.setOpenDirection();
+    };
+
+    setOpenDirection = () => {
+        const dropdown = document.getElementById('dropdown');
+        const dropdownRect = dropdown.getBoundingClientRect();
+        const dropdownHeight = 200;
+
+        const spaceAtTheBottom =
+            document.documentElement.clientHeight - dropdownRect.top - dropdownRect.height - dropdownHeight;
+        const spaceAtTheTop = dropdownRect.top - dropdownHeight;
+
+        const upward = spaceAtTheBottom < 0 && spaceAtTheTop > spaceAtTheBottom;
+
+        if (!upward !== !this.state.upward) {
+            this.setState({
+                upward
+            })
+        }
+    };
+
+    hideDropdownList = () => {
+        this.setState({
+            active: false
+        });
+    };
 
     render() {
         return (
-            <div>
+            <div id='dropdown'>
                 <SearchBar
                     filterText={this.state.filterText}
                     onFilterTextChange={this.handleFilterTextChange}
@@ -47,12 +77,14 @@ export default class Dropdown extends Component {
                     onOptionChange={this.handleOptionChange}
                     placeholder={this.state.placeholder}
                     onPlaceholderChange={this.handlePlaceholderChange}
+                    showDropdownList={this.showDropdownList}
                 />
                 <DropdownList
                     options={countries}
                     filterText={this.state.filterText}
                     option={this.state.selectedOption}
                     onOptionChange={this.handleOptionChange}
+                    active={this.state.active}
                 />
             </div>
         )

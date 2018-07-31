@@ -1,31 +1,19 @@
 import React, {Component} from 'react';
 
 export default class SearchBar extends Component {
-    constructor(props) {
-        super(props);
-        this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
-        this.handleOptionChange = this.handleOptionChange.bind(this);
-        this.handleFocus = this.handleFocus.bind(this);
-    }
 
-    handleFilterTextChange(e) {
+    handleFilterTextChange = (e) => {
         this.props.onFilterTextChange(e.target.value);
-    }
+    };
 
-    handleOptionChange(option) {
-        this.props.onOptionChange(option ? option.name : null);
-    }
-
-    handleFocus() {
+    handleFocus = () => {
         console.log('focus');
         console.log('props', this.props);
+        this.props.onOptionChange(null);
+        this.props.onFilterTextChange('');
+        this.props.onPlaceholderChange();
 
-        if (this.props.option) {
-            this.props.onOptionChange(null);
-            this.props.onFilterTextChange('');
-            this.props.onPlaceholderChange();
-        }
-    }
+    };
 
     render() {
         const {filterText, option, placeholder} = this.props;

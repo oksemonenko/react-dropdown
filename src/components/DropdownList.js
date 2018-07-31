@@ -2,14 +2,6 @@ import React, {Component} from 'react';
 import DropdownListItem from './DropdownListItem';
 
 export default class DropdownList extends Component {
-    constructor(props) {
-        super(props);
-        this.handleOptionChange = this.handleOptionChange.bind(this);
-    }
-
-    handleOptionChange(option) {
-        this.props.onOptionChange(option ? option.name : null);
-    }
 
     // componentWillMount() {
     //     this.updateOption(this.props);
@@ -27,15 +19,19 @@ export default class DropdownList extends Component {
     //     })
     // };
 
-    handleChange(event, option) {
+    handleChange = (event, option) => {
         event.stopPropagation();
 
         this.handleOptionChange(option);
-    }
+    };
+
+    handleOptionChange = (option) => {
+        this.props.onOptionChange(option ? option.name : null);
+    };
 
     render() {
-        const {options} = this.props;
-        const filterText = this.props.filterText.toLowerCase();
+        const {filterText, options, active} = this.props;
+        const formattedFilterText = filterText.toLowerCase();
 
         let compare = (a,b) => {
             if (a.name < b.name) {
@@ -49,7 +45,7 @@ export default class DropdownList extends Component {
 
         const sortedDropdownListItems = options.sort(compare);
         const filteredDropdownListItems = sortedDropdownListItems.filter(option => {
-            return option.name.toLowerCase().indexOf(filterText) !== -1;
+            return option.name.toLowerCase().indexOf(formattedFilterText) !== -1;
 
         });
 
@@ -62,7 +58,7 @@ export default class DropdownList extends Component {
         );
 
         return (
-            <ul>
+            <ul style={{display: active ? 'block' : 'none', maxHeight: '200px', overflowY: 'scroll'}}>
                 {filteredDropdownListItemsElements}
             </ul>
 
