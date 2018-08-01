@@ -29,13 +29,6 @@ export default class Dropdown extends Component {
         this.hideDropdownList();
     };
 
-    handlePlaceholderChange = () => {
-        this.setState({
-            placeholder: ''
-        });
-        this.showDropdownList();
-    };
-
     showDropdownList = () => {
         this.setState({
             active: true
@@ -72,6 +65,7 @@ export default class Dropdown extends Component {
         return (
             <div className={styles.dropdown} id='dropdown'>
                 <SearchBar
+                    active={this.state.active}
                     filterText={this.state.filterText}
                     onFilterTextChange={this.handleFilterTextChange}
                     option={this.state.selectedOption}
@@ -80,6 +74,7 @@ export default class Dropdown extends Component {
                     onPlaceholderChange={this.handlePlaceholderChange}
                     showDropdownList={this.showDropdownList}
                     hideDropdownList={this.hideDropdownList}
+                    setDefaultState={this.setDefaultState}
                 />
                 <DropdownList
                     options={countries}

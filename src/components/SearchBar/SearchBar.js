@@ -9,11 +9,9 @@ export default class SearchBar extends Component {
     };
 
     handleFocus = () => {
-        console.log('focus');
-        console.log('props', this.props);
         this.props.onOptionChange(null);
         this.props.onFilterTextChange('');
-        this.props.onPlaceholderChange();
+        this.props.showDropdownList();
         this.animatePlaceholder();
     };
 
@@ -25,7 +23,8 @@ export default class SearchBar extends Component {
             return;
         }
         if (target.parentNode.classList.contains(dropdownListStyles["dropdown-list"])) {
-            return false;
+            this.removePlaceholder();
+            return;
         }
         this.props.hideDropdownList();
         this.deAnimatePlaceholder();
@@ -33,13 +32,11 @@ export default class SearchBar extends Component {
 
     animatePlaceholder = () => {
         const inputWrapper = document.getElementById('searchBarInputWrapper');
-        const input = document.getElementById('searchBarInput');
-        const placeholder = document.createElement('span');
-        placeholder.innerHTML = this.props.placeholder;
-        placeholder.classList.add(styles.placeholder);
-        input.parentNode.insertBefore(placeholder, input.nextSibling);
-        input.setAttribute('placeholder', '');
 
+        const classSelected = styles["search-bar__input-wrapper--selected"];
+        if (inputWrapper.classList.contains(classSelected)) {
+            inputWrapper.classList.remove(classSelected);
+        }
         const classActive = styles["search-bar__input-wrapper--active"];
         inputWrapper.classList.add(classActive);
     };
@@ -53,9 +50,18 @@ export default class SearchBar extends Component {
         }
     };
 
+    removePlaceholder = () => {
+        const inputWrapper = document.getElementById('searchBarInputWrapper');
+        const classSelected = styles["search-bar__input-wrapper--selected"];
+
+        if (!inputWrapper.classList.contains(classSelected)) {
+            inputWrapper.classList.add(classSelected);
+        }
+    };
+
     render() {
         const {filterText, option, placeholder} = this.props;
-        const value = option || filterText || placeholder;
+        const value = option || filterText;
 
         return (
             <div className={styles["search-bar"]}>
@@ -63,14 +69,16 @@ export default class SearchBar extends Component {
                     htmlFor="searchBarInput"
                     className={styles["search-bar__input-wrapper"]}
                     id='searchBarInputWrapper'>
-                <input
-                    className={styles["search-bar__input"]}
-                    type='text'
-                    value={value}
-                    onChange={this.handleFilterTextChange}
-                    onFocus={this.handleFocus}
-                    onBlur={this.handleBlur}
-                    id="searchBarInput" />
+                    <input
+                        className={styles["search-bar__input"]}
+                        type='text'
+                        value={value}
+                        onChange={this.handleFilterTextChange}
+                        onFocus={this.handleFocus}
+                        onBlur={this.handleBlur}
+                        id="searchBarInput" />
+                    <span className={styles.placeholder}>{placeholder}</span>
+                    <i className={styles["search-bar__icon"]}>{}</i>
                 </label>
             </div>
         )
