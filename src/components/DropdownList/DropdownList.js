@@ -53,7 +53,8 @@ export default class DropdownList extends Component {
         const filteredDropdownListItemsElements = filteredDropdownListItems.map(option =>
             <li
                 key = {option.code}
-                onClick={event => this.handleChange(event, option)}>
+                onClick={event => this.handleChange(event, option)}
+                tabIndex='0'>
                 <DropdownListItem option = {option} />
             </li>
         );

@@ -79,6 +79,7 @@ export default class Dropdown extends Component {
                     placeholder={this.state.placeholder}
                     onPlaceholderChange={this.handlePlaceholderChange}
                     showDropdownList={this.showDropdownList}
+                    hideDropdownList={this.hideDropdownList}
                 />
                 <DropdownList
                     options={countries}
