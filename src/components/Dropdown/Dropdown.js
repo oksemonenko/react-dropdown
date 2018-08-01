@@ -1,7 +1,8 @@
+import styles from './Dropdown.module.styl';
 import React, {Component} from 'react';
-import SearchBar from './SearchBar';
-import DropdownList from './DropdownList';
-import countries from '../countries';
+import SearchBar from '../SearchBar/SearchBar';
+import DropdownList from '../DropdownList/DropdownList';
+import countries from '../../countries';
 
 export default class Dropdown extends Component {
     constructor(props) {
@@ -69,7 +70,7 @@ export default class Dropdown extends Component {
 
     render() {
         return (
-            <div id='dropdown'>
+            <div className={styles.dropdown} id='dropdown'>
                 <SearchBar
                     filterText={this.state.filterText}
                     onFilterTextChange={this.handleFilterTextChange}

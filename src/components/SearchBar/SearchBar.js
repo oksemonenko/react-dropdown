@@ -1,3 +1,4 @@
+import styles from './SearchBar.module.styl';
 import React, {Component} from 'react';
 
 export default class SearchBar extends Component {
@@ -20,13 +21,14 @@ export default class SearchBar extends Component {
         const value = option || filterText || placeholder;
 
         return (
-            <form>
+            <div className={styles["search-bar"]}>
                 <input
+                    className={styles["search-bar__input"]}
                     type='text'
                     value={value}
                     onChange={this.handleFilterTextChange}
                     onFocus={this.handleFocus}/>
-            </form>
+            </div>
         )
     }
 }

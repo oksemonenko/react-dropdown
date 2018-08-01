@@ -1,5 +1,6 @@
+import styles from './DropdownList.module.styl'
 import React, {Component} from 'react';
-import DropdownListItem from './DropdownListItem';
+import DropdownListItem from '../DropdownListItem/DropdownListItem';
 
 export default class DropdownList extends Component {
 
@@ -57,8 +58,13 @@ export default class DropdownList extends Component {
             </li>
         );
 
+        const className = active ?
+            [styles["dropdown-list--visible"], styles["dropdown-list"]].join(' ')
+            : styles["dropdown-list"];
+
         return (
-            <ul style={{display: active ? 'block' : 'none', maxHeight: '200px', overflowY: 'scroll'}}>
+            <ul
+                className={className}>
                 {filteredDropdownListItemsElements}
             </ul>
 
