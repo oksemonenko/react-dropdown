@@ -3,14 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "custom-react-scripts": "^0.2.2",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4",
-    "stylus-chokidar": "0.0.3"
+    "react-dom": "^16.4.1"
   },
   "scripts": {
-    "build-css": "stylus-chokidar src/ -o src/",
-    "watch-css": "npm run build-css && stylus-chokidar src/ -o src/ --watch",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
