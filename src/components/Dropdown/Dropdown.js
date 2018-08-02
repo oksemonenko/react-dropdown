@@ -29,7 +29,6 @@ export default class Dropdown extends Component {
             selectedOption: selectedOption
         });
         this.hideDropdownList();
-        this.setPlaceholderPosition(PlaceholderPosition.center);
     };
 
     // toggle = e => (this.state.open ? this.close(e) : this.open(e));
@@ -59,9 +58,7 @@ export default class Dropdown extends Component {
             this.setState({
                 upward
             });
-            this.setPlaceholderPosition(null);
         }
-        this.setPlaceholderPosition(PlaceholderPosition.top);
     };
 
     hideDropdownList = () => {
@@ -91,6 +88,7 @@ export default class Dropdown extends Component {
                     hideDropdownList={this.hideDropdownList}
                     setPlaceholderPosition={this.setPlaceholderPosition}
                     placeholderPosition={this.state.placeholderPosition}
+                    upward={this.state.upward}
                 />
                 <DropdownList
                     options={countries}

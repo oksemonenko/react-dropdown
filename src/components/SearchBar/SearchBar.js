@@ -12,73 +12,42 @@ export default class SearchBar extends Component {
     handleFocus = () => {
         this.props.onOptionChange(null);
         this.props.onFilterTextChange('');
+        this.props.setPlaceholderPosition(PlaceholderPosition.top);
         this.props.showDropdownList();
-        console.log(this.props);
-        this.setPlaceholderPosition();
     };
 
     handleBlur = (e) => {
         const target = e.relatedTarget;
         if (!target) {
             this.props.hideDropdownList();
-            this.setPlaceholderPosition();
+            this.props.setPlaceholderPosition(PlaceholderPosition.center);
             return;
         }
         if (target.parentNode.classList.contains(dropdownListStyles['dropdown-list'])) {
-            this.setPlaceholderPosition();
+            this.props.setPlaceholderPosition(null);
             return;
         }
         this.props.hideDropdownList();
-        this.setPlaceholderPosition();
-    };
-
-    setPlaceholderPosition = () => {
-        const placeholderPosition = this.props.placeholderPosition;
-        if (!placeholderPosition) {
-            this.removePlaceholder();
-            return
-        }
-        if (placeholderPosition === PlaceholderPosition.top) {
-            this.animatePlaceholder();
-            return;
-        }
-        if (placeholderPosition === PlaceholderPosition.center) {
-            this.deAnimatePlaceholder();
-        }
-    };
-
-    animatePlaceholder = () => {
-        const inputWrapper = document.getElementById('searchBarInputWrapper');
-
-        const classSelected = styles['search-bar__input-wrapper--selected'];
-        if (inputWrapper.classList.contains(classSelected)) {
-            inputWrapper.classList.remove(classSelected);
-        }
-        const classActive = styles['search-bar__input-wrapper--active'];
-        inputWrapper.classList.add(classActive);
-    };
-
-    deAnimatePlaceholder = () => {
-        const inputWrapper = document.getElementById('searchBarInputWrapper');
-        const classActive = styles['search-bar__input-wrapper--active'];
-
-        if (inputWrapper.classList.contains(classActive)) {
-            inputWrapper.classList.remove(classActive);
-        }
-    };
-
-    removePlaceholder = () => {
-        const inputWrapper = document.getElementById('searchBarInputWrapper');
-        const classSelected = styles['search-bar__input-wrapper--selected'];
-
-        if (!inputWrapper.classList.contains(classSelected)) {
-            inputWrapper.classList.add(classSelected);
-        }
+        this.props.setPlaceholderPosition(null);
     };
 
     render() {
-        const {filterText, option, placeholder} = this.props;
+        const {filterText, option, placeholder, placeholderPosition, upward} = this.props;
         const value = option || filterText;
+
+        let setPlaceholderClassName = () => {
+            if (!placeholderPosition) {
+                return styles['placeholder--none'];
+            }
+            if (placeholderPosition === PlaceholderPosition.top) {
+                return upward ? styles['placeholder--none'] : [styles['placeholder--top'], styles.placeholder].join(' ');
+            }
+            if (placeholderPosition === PlaceholderPosition.center) {
+                return styles.placeholder;
+            }
+        };
+
+        const placeholderClassName = setPlaceholderClassName();
 
         return (
             <div className={styles['search-bar']}>
@@ -94,7 +63,7 @@ export default class SearchBar extends Component {
                         onFocus={this.handleFocus}
                         onBlur={this.handleBlur}
                         id='searchBarInput' />
-                    <span className={styles.placeholder}>{placeholder}</span>
+                    <span className={placeholderClassName}>{placeholder}</span>
                     <i className={styles['search-bar__icon']}>{}</i>
                 </label>
             </div>
