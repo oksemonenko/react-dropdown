@@ -109,12 +109,7 @@ export default class Dropdown extends Component {
                     filterText={this.state.filterText}
                     onFilterTextChange={this.handleFilterTextChange}
                     option={this.state.selectedOption}
-                    onOptionChange={this.handleOptionChange}
                     placeholder={this.state.placeholder}
-                    onPlaceholderChange={this.handlePlaceholderChange}
-                    showDropdownList={this.showDropdownList}
-                    hideDropdownList={this.hideDropdownList}
-                    setPlaceholderPosition={this.setPlaceholderPosition}
                     placeholderPosition={this.state.placeholderPosition}
                     upward={this.state.upward}
                     toggle={this.toggle.bind(this)}

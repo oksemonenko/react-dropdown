@@ -16,16 +16,13 @@ export default class SearchBar extends Component {
     handleBlur = (e) => {
         const target = e.relatedTarget;
         if (!target) {
-            this.props.hideDropdownList();
-            this.props.setPlaceholderPosition(PlaceholderPosition.center);
+            this.props.close();
             return;
         }
         if (target.parentNode.classList.contains(dropdownListStyles['dropdown-list'])) {
-            this.props.setPlaceholderPosition(null);
             return;
         }
-        this.props.hideDropdownList();
-        this.props.setPlaceholderPosition(null);
+        this.props.close();
     };
 
     handleIconClick = (e) => {
@@ -85,6 +82,8 @@ export default class SearchBar extends Component {
                     <i
                         className={styles['search-bar__icon']}
                         onClick={this.handleIconClick}
+                        tabIndex='0'
+                        onBlur={this.handleBlur}
                     >{}</i>
                 </label>
             </div>

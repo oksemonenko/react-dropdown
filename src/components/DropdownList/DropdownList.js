@@ -4,22 +4,6 @@ import DropdownListItem from '../DropdownListItem/DropdownListItem';
 
 export default class DropdownList extends Component {
 
-    // componentWillMount() {
-    //     this.updateOption(this.props);
-    // }
-    //
-    // componentWillReceiveProps(nextProps) {
-    //     this.updateOption(nextProps);
-    // }
-    //
-    // updateOption = ({options, name}) => {
-    //     const option = options.find(item => item.name === name);
-    //
-    //     this.setState({
-    //         option: option || null
-    //     })
-    // };
-
     handleChange = (event, option) => {
         event.stopPropagation();
 
