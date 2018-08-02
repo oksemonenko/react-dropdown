@@ -31,26 +31,47 @@ export default class SearchBar extends Component {
         this.props.setPlaceholderPosition(null);
     };
 
+    handleIconClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+    };
+
     render() {
-        const {filterText, option, placeholder, placeholderPosition, upward} = this.props;
+        const {filterText, option, placeholder, placeholderPosition, upward, active} = this.props;
         const value = option || filterText;
 
         let setPlaceholderClassName = () => {
             if (!placeholderPosition) {
-                return styles['placeholder--none'];
+                return styles['search-bar__placeholder--none'];
             }
             if (placeholderPosition === PlaceholderPosition.top) {
-                return upward ? styles['placeholder--none'] : [styles['placeholder--top'], styles.placeholder].join(' ');
+                return upward ?
+                    styles['search-bar__placeholder--none']
+                    : [styles['search-bar__placeholder--top'], styles["search-bar__placeholder"]].join(' ');
             }
             if (placeholderPosition === PlaceholderPosition.center) {
-                return styles.placeholder;
+                return styles["search-bar__placeholder"];
             }
         };
 
         const placeholderClassName = setPlaceholderClassName();
 
+
+        let setSearchBarClassName = () => {
+            if (!active) {
+                return styles['search-bar'];
+            }
+            if (!upward) {
+                return [styles['search-bar--active'], styles["search-bar"]].join(' ');
+            }
+            return [styles['search-bar--active'], styles['search-bar--upward'], styles["search-bar"]].join(' ');
+        };
+
+        const searchBarClassName = setSearchBarClassName();
+
         return (
-            <div className={styles['search-bar']}>
+            <div className={searchBarClassName}>
                 <label
                     htmlFor='searchBarInput'
                     className={styles['search-bar__input-wrapper']}
@@ -64,7 +85,10 @@ export default class SearchBar extends Component {
                         onBlur={this.handleBlur}
                         id='searchBarInput' />
                     <span className={placeholderClassName}>{placeholder}</span>
-                    <i className={styles['search-bar__icon']}>{}</i>
+                    <i
+                        className={styles['search-bar__icon']}
+                        onClick={this.handleIconClick}
+                    >{}</i>
                 </label>
             </div>
         )
