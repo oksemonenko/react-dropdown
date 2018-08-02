@@ -31,7 +31,7 @@ export default class DropdownList extends Component {
     };
 
     render() {
-        const {filterText, options, active} = this.props;
+        const {filterText, options, active, upward} = this.props;
         const formattedFilterText = filterText.toLowerCase();
 
         let compare = (a,b) => {
@@ -59,13 +59,25 @@ export default class DropdownList extends Component {
             </li>
         );
 
-        const className = active ?
-            [styles["dropdown-list--visible"], styles["dropdown-list"]].join(' ')
-            : styles["dropdown-list"];
+        let setDropdownListClassName = () => {
+            if (!active) {
+                return styles['dropdown-list'];
+            }
+            if (!upward) {
+                return [styles['dropdown-list--visible'], styles['dropdown-list']].join(' ');
+            }
+            return [
+                styles['dropdown-list--upward'],
+                styles['dropdown-list--visible'],
+                styles['dropdown-list']].join(' ')
+        };
+
+        const className = setDropdownListClassName();
 
         return (
             <ul
-                className={className}>
+                className={className}
+                id='dropdownList'>
                 {filteredDropdownListItemsElements}
             </ul>
 

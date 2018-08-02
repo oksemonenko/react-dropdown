@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import SearchBar from '../SearchBar/SearchBar';
 import DropdownList from '../DropdownList/DropdownList';
 import countries from '../../countries';
+import {PlaceholderPosition} from '../../PlaceholderPosition'
 
 export default class Dropdown extends Component {
     constructor(props) {
@@ -11,6 +12,7 @@ export default class Dropdown extends Component {
             filterText: '',
             selectedOption: null,
             placeholder: 'Выберите страну',
+            placeholderPosition: PlaceholderPosition.center,
             active: false,
             upward: false
         };
@@ -27,7 +29,10 @@ export default class Dropdown extends Component {
             selectedOption: selectedOption
         });
         this.hideDropdownList();
+        this.setPlaceholderPosition(PlaceholderPosition.center);
     };
+
+    // toggle = e => (this.state.open ? this.close(e) : this.open(e));
 
     showDropdownList = () => {
         this.setState({
@@ -39,8 +44,10 @@ export default class Dropdown extends Component {
 
     setOpenDirection = () => {
         const dropdown = document.getElementById('dropdown');
+        const dropdownList = document.getElementById('dropdownList');
         const dropdownRect = dropdown.getBoundingClientRect();
-        const dropdownHeight = 200;
+        const computedStyle = getComputedStyle(dropdownList);
+        const dropdownHeight = Number(computedStyle.height.replace(/\D+/g,''));
 
         const spaceAtTheBottom =
             document.documentElement.clientHeight - dropdownRect.top - dropdownRect.height - dropdownHeight;
@@ -51,13 +58,21 @@ export default class Dropdown extends Component {
         if (!upward !== !this.state.upward) {
             this.setState({
                 upward
-            })
+            });
+            this.setPlaceholderPosition(null);
         }
+        this.setPlaceholderPosition(PlaceholderPosition.top);
     };
 
     hideDropdownList = () => {
         this.setState({
             active: false
+        });
+    };
+
+    setPlaceholderPosition = (position) => {
+        this.setState({
+            placeholderPosition: position
         });
     };
 
@@ -74,7 +89,8 @@ export default class Dropdown extends Component {
                     onPlaceholderChange={this.handlePlaceholderChange}
                     showDropdownList={this.showDropdownList}
                     hideDropdownList={this.hideDropdownList}
-                    setDefaultState={this.setDefaultState}
+                    setPlaceholderPosition={this.setPlaceholderPosition}
+                    placeholderPosition={this.state.placeholderPosition}
                 />
                 <DropdownList
                     options={countries}
@@ -82,6 +98,7 @@ export default class Dropdown extends Component {
                     option={this.state.selectedOption}
                     onOptionChange={this.handleOptionChange}
                     active={this.state.active}
+                    upward={this.state.upward}
                 />
             </div>
         )
