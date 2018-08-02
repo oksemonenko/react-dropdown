@@ -27,11 +27,32 @@ export default class Dropdown extends Component {
     handleOptionChange = (selectedOption) => {
         this.setState({
             selectedOption: selectedOption
-        });
-        this.hideDropdownList();
+        }, () => { this.close() });
     };
 
-    // toggle = e => (this.state.open ? this.close(e) : this.open(e));
+    setDefaultFilterAndOption = () => {
+        this.setState({
+            filterText: '',
+            selectedOption: null,
+        });
+    };
+
+    toggle = () => {
+        console.log(this);
+        (this.state.active ? this.close() : this.open());
+    };
+
+    open = () => {
+        this.showDropdownList();
+        this.setDefaultFilterAndOption();
+    };
+
+    close = () => {
+        this.state.selectedOption ?
+            this.setPlaceholderPosition(null)
+            : this.setPlaceholderPosition(PlaceholderPosition.center);
+        this.hideDropdownList();
+    };
 
     showDropdownList = () => {
         this.setState({
@@ -46,7 +67,7 @@ export default class Dropdown extends Component {
         const dropdownList = document.getElementById('dropdownList');
         const dropdownRect = dropdown.getBoundingClientRect();
         const computedStyle = getComputedStyle(dropdownList);
-        const dropdownHeight = Number(computedStyle.height.replace(/\D+/g,''));
+        const dropdownHeight = Number(computedStyle.maxHeight.replace(/\D+/g,''));
 
         const spaceAtTheBottom =
             document.documentElement.clientHeight - dropdownRect.top - dropdownRect.height - dropdownHeight;
@@ -57,13 +78,20 @@ export default class Dropdown extends Component {
         if (!upward !== !this.state.upward) {
             this.setState({
                 upward
-            });
+            }, () => { this.setPlaceholderPositionByState() });
         }
+        this.setPlaceholderPositionByState();
     };
 
     hideDropdownList = () => {
         this.setState({
             active: false
+        });
+    };
+
+    setPlaceholderPositionByState = () => {
+        this.setState({
+            placeholderPosition: (this.state.upward ? null : PlaceholderPosition.top)
         });
     };
 
@@ -89,12 +117,15 @@ export default class Dropdown extends Component {
                     setPlaceholderPosition={this.setPlaceholderPosition}
                     placeholderPosition={this.state.placeholderPosition}
                     upward={this.state.upward}
+                    toggle={this.toggle.bind(this)}
+                    open={this.open.bind(this)}
+                    close={this.close.bind(this)}
                 />
                 <DropdownList
                     options={countries}
                     filterText={this.state.filterText}
                     option={this.state.selectedOption}
-                    onOptionChange={this.handleOptionChange}
+                    onOptionChange={this.handleOptionChange.bind(this)}
                     active={this.state.active}
                     upward={this.state.upward}
                 />

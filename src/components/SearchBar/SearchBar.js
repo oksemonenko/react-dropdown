@@ -10,10 +10,7 @@ export default class SearchBar extends Component {
     };
 
     handleFocus = () => {
-        this.props.onOptionChange(null);
-        this.props.onFilterTextChange('');
-        this.props.setPlaceholderPosition(PlaceholderPosition.top);
-        this.props.showDropdownList();
+        this.props.open();
     };
 
     handleBlur = (e) => {
@@ -34,7 +31,7 @@ export default class SearchBar extends Component {
     handleIconClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
-
+        this.props.toggle();
     };
 
     render() {
