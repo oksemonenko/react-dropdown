@@ -1,6 +1,7 @@
 import styles from './DropdownList.module.styl'
 import React, {Component} from 'react';
 import DropdownListItem from '../DropdownListItem/DropdownListItem';
+import {helpers} from '../../helpers'
 
 export default class DropdownList extends Component {
 
@@ -18,30 +19,30 @@ export default class DropdownList extends Component {
         const {filterText, options, active, upward} = this.props;
         const formattedFilterText = filterText.toLowerCase();
 
-        let compare = (a,b) => {
-            if (a.name < b.name) {
-                return -1;
-            }
-            if (a.name > b.name) {
-                return 1;
-            }
-            return 0;
-        };
-
-        const sortedDropdownListItems = options.sort(compare);
+        const sortedDropdownListItems = options.sort(helpers.compare);
         const filteredDropdownListItems = sortedDropdownListItems.filter(option => {
             return option.name.toLowerCase().indexOf(formattedFilterText) !== -1;
 
         });
 
-        const filteredDropdownListItemsElements = filteredDropdownListItems.map(option =>
-            <li
-                key = {option.code}
-                onClick={event => this.handleChange(event, option)}
-                tabIndex='0'>
-                <DropdownListItem option = {option} />
-            </li>
-        );
+        const filteredDropdownListItemsElements =
+            filteredDropdownListItems.length ?
+                filteredDropdownListItems.map(option =>
+                    <li
+                        key = {option.code}
+                        onClick={event => this.handleChange(event, option)}
+                        tabIndex='0'>
+                        <DropdownListItem option = {option} />
+                    </li>
+                )
+                :
+                <li>
+                    <DropdownListItem
+                        option = {{
+                            name: 'Result not found'
+                        }} />
+                </li>;
+
 
         let setDropdownListClassName = () => {
             if (!active) {

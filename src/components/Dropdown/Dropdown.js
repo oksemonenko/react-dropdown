@@ -30,21 +30,16 @@ export default class Dropdown extends Component {
         }, () => { this.close() });
     };
 
-    setDefaultFilterAndOption = () => {
-        this.setState({
-            filterText: '',
-            selectedOption: null,
-        });
-    };
-
     toggle = () => {
         console.log(this);
         (this.state.active ? this.close() : this.open());
     };
 
     open = () => {
+        this.focusOnInput();
         this.showDropdownList();
-        this.setDefaultFilterAndOption();
+        this.setDefaultFilter();
+        this.setDefaultOption();
     };
 
     close = () => {
@@ -52,6 +47,12 @@ export default class Dropdown extends Component {
             this.setPlaceholderPosition(null)
             : this.setPlaceholderPosition(PlaceholderPosition.center);
         this.hideDropdownList();
+        this.setDefaultFilter();
+    };
+
+    focusOnInput = () => {
+        const searchBarInput = document.getElementById('searchBarInput');
+        searchBarInput.focus();
     };
 
     showDropdownList = () => {
@@ -60,6 +61,12 @@ export default class Dropdown extends Component {
         });
 
         this.setOpenDirection();
+    };
+
+    hideDropdownList = () => {
+        this.setState({
+            active: false
+        });
     };
 
     setOpenDirection = () => {
@@ -83,9 +90,15 @@ export default class Dropdown extends Component {
         this.setPlaceholderPositionByState();
     };
 
-    hideDropdownList = () => {
+    setDefaultFilter = () => {
         this.setState({
-            active: false
+            filterText: ''
+        });
+    };
+
+    setDefaultOption = () => {
+        this.setState({
+            selectedOption: null
         });
     };
 

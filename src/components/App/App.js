@@ -6,7 +6,7 @@ export default class App extends Component {
     render() {
         return (
             <div className={styles.app}>
-                <h1>Dropdown list with search</h1>
+                <h1 className={styles['app__header']}>Dropdown list with search</h1>
                 <Dropdown />
             </div>
         )

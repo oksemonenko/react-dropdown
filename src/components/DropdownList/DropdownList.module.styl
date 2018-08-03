@@ -1,19 +1,22 @@
+@import "../../theme/base";
+
 .dropdown-list
   display none
   cursor pointer
   position absolute
   top 100%
+  left 1px
   flex-direction column
-  min-width 100%
+  min-width: calc(100% - 2px);
   max-height 16rem
   padding 0
   margin 0 -1px
   overflow-x hidden
   overflow-y scroll
-  font-size 1em
+  font-size $font-size
   text-align left
-  background #fff
-  border 1px solid gray
+  background $bg-color
+  border 1px solid $weak-color
   border-top-color transparent
   border-radius 0 0 0.3rem 0.3rem
   outline none
@@ -29,6 +32,6 @@
   &--upward
     top auto
     bottom 100%
-    border-top-color gray
+    border-top-color $weak-color
     border-bottom-color transparent
     border-radius 0.3rem 0.3rem 0 0
