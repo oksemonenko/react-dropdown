@@ -11,7 +11,7 @@ export default class Dropdown extends Component {
         this.state = {
             filterText: '',
             selectedOption: null,
-            placeholder: 'Выберите страну',
+            placeholder: 'Select country',
             placeholderPosition: PlaceholderPosition.center,
             active: false,
             upward: false
