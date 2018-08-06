@@ -15,7 +15,11 @@ export default class SearchBar extends Component {
         option: PropTypes.shape({
             name: PropTypes.string.isRequired,
             code: PropTypes.string.isRequired
-        })
+        }),
+        onFilterTextChange: PropTypes.func.isRequired,
+        open: PropTypes.func.isRequired,
+        close: PropTypes.func.isRequired,
+        toggle: PropTypes.func.isRequired
     };
 
     handleFilterTextChange = (e) => {

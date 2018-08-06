@@ -10,7 +10,8 @@ export default class DropdownList extends Component {
         filterText: PropTypes.string,
         options: PropTypes.array,
         active: PropTypes.bool,
-        upward: PropTypes.bool
+        upward: PropTypes.bool,
+        onOptionChange: PropTypes.func.isRequired
     };
 
     handleChange = (event, option) => {
@@ -66,7 +67,6 @@ export default class DropdownList extends Component {
         };
 
         const className = setDropdownListClassName();
-
         return (
             <ul
                 className={className}
