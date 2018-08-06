@@ -1,9 +1,17 @@
 import styles from './DropdownList.module.styl'
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import DropdownListItem from '../DropdownListItem/DropdownListItem';
 import {helpers} from '../../helpers'
 
 export default class DropdownList extends Component {
+
+    static propTypes = {
+        filterText: PropTypes.string,
+        options: PropTypes.array,
+        active: PropTypes.bool,
+        upward: PropTypes.bool
+    };
 
     handleChange = (event, option) => {
         event.stopPropagation();

@@ -1,9 +1,22 @@
 import styles from './SearchBar.module.styl';
 import dropdownListStyles from '../DropdownList/DropdownList.module.styl';
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {PlaceholderPosition} from '../../PlaceholderPosition'
 
 export default class SearchBar extends Component {
+
+    static propTypes = {
+        filterText: PropTypes.string,
+        active: PropTypes.bool,
+        upward: PropTypes.bool,
+        placeholder: PropTypes.string,
+        placeholderPosition: PropTypes.string,
+        option: PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            code: PropTypes.string.isRequired
+        })
+    };
 
     handleFilterTextChange = (e) => {
         this.props.onFilterTextChange(e.target.value);

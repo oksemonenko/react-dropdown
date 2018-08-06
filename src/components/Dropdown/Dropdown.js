@@ -6,17 +6,14 @@ import countries from '../../countries';
 import {PlaceholderPosition} from '../../PlaceholderPosition'
 
 export default class Dropdown extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            filterText: '',
-            selectedOption: null,
-            placeholder: 'Select country',
-            placeholderPosition: PlaceholderPosition.center,
-            active: false,
-            upward: false
-        };
-    }
+    state = {
+        filterText: '',
+        selectedOption: null,
+        placeholder: 'Select country',
+        placeholderPosition: PlaceholderPosition.center,
+        active: false,
+        upward: false
+    };
 
     handleFilterTextChange = (filterText) => {
         this.setState({
