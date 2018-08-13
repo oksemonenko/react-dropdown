@@ -46,7 +46,8 @@ export default class SearchBar extends Component {
             this.props.close();
             return;
         }
-        if (target.parentNode.classList.contains(dropdownListStyles['dropdown-list'])) {
+        if (target.classList.contains(styles["search-bar__icon"]) ||
+            target.parentNode.classList.contains(dropdownListStyles['dropdown-list'])) {
             return;
         }
         this.props.close();
@@ -60,7 +61,7 @@ export default class SearchBar extends Component {
 
     render() {
         const {filterText, option, placeholder, placeholderPosition, upward, active} = this.props;
-        const value = option || filterText;
+        const value = option ? option.name : filterText;
 
         let setPlaceholderClassName = () => {
             if (!placeholderPosition) {

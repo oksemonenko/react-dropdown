@@ -29,7 +29,7 @@ export default class DropdownList extends Component {
     };
 
     handleOptionChange = (option) => {
-        this.props.onOptionChange(option ? option.name : null);
+        this.props.onOptionChange(option ? option : null);
     };
 
     render() {
@@ -56,7 +56,8 @@ export default class DropdownList extends Component {
                 <li>
                     <DropdownListItem
                         option = {{
-                            name: 'Result not found'
+                            name: 'Result not found',
+                            code: ''
                         }} />
                 </li>;
 

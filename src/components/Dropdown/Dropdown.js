@@ -124,15 +124,15 @@ export default class Dropdown extends Component {
                     placeholder={this.state.placeholder}
                     placeholderPosition={this.state.placeholderPosition}
                     upward={this.state.upward}
-                    toggle={this.toggle.bind(this)}
-                    open={this.open.bind(this)}
-                    close={this.close.bind(this)}
+                    toggle={this.toggle}
+                    open={this.open}
+                    close={this.close}
                 />
                 <DropdownList
                     options={countries}
                     filterText={this.state.filterText}
                     option={this.state.selectedOption}
-                    onOptionChange={this.handleOptionChange.bind(this)}
+                    onOptionChange={this.handleOptionChange}
                     active={this.state.active}
                     upward={this.state.upward}
                 />
