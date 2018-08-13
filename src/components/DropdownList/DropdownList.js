@@ -22,18 +22,14 @@ export default class DropdownList extends Component {
         upward: false
     };
 
-    handleChange = (event, option) => {
-        event.stopPropagation();
-
-        this.handleOptionChange(option);
-    };
-
-    handleOptionChange = (option) => {
-        this.props.onOptionChange(option ? option : null);
-    };
-
     render() {
-        const {filterText, options, active, upward} = this.props;
+        const {
+            filterText,
+            options,
+            active,
+            upward
+        } = this.props;
+
         const formattedFilterText = filterText.toLowerCase();
 
         const sortedDropdownListItems = options.sort(helpers.compare);
@@ -43,23 +39,22 @@ export default class DropdownList extends Component {
         });
 
         const filteredDropdownListItemsElements =
-            filteredDropdownListItems.length ?
-                filteredDropdownListItems.map(option =>
+            filteredDropdownListItems.length
+                ? filteredDropdownListItems.map(option =>
                     <li
                         key = {option.code}
-                        onClick={event => this.handleChange(event, option)}
+                        onClick={this.props.onOptionChange.bind(null, option)}
                         tabIndex='0'>
                         <DropdownListItem option = {option} />
                     </li>
                 )
-                :
-                <li>
+                : <li>
                     <DropdownListItem
                         option = {{
                             name: 'Result not found',
                             code: ''
                         }} />
-                </li>;
+                  </li>;
 
 
         let setDropdownListClassName = () => {

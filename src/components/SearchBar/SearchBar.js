@@ -46,8 +46,8 @@ export default class SearchBar extends Component {
             this.props.close();
             return;
         }
-        if (target.classList.contains(styles["search-bar__icon"]) ||
-            target.parentNode.classList.contains(dropdownListStyles['dropdown-list'])) {
+        if (target.classList.contains(styles["search-bar__icon"])
+            || target.parentNode.classList.contains(dropdownListStyles['dropdown-list'])) {
             return;
         }
         this.props.close();
@@ -60,7 +60,15 @@ export default class SearchBar extends Component {
     };
 
     render() {
-        const {filterText, option, placeholder, placeholderPosition, upward, active} = this.props;
+        const {
+            filterText,
+            option,
+            placeholder,
+            placeholderPosition,
+            upward,
+            active
+        } = this.props;
+
         const value = option ? option.name : filterText;
 
         let setPlaceholderClassName = () => {
@@ -68,8 +76,8 @@ export default class SearchBar extends Component {
                 return styles['search-bar__placeholder--none'];
             }
             if (placeholderPosition === PlaceholderPosition.top) {
-                return upward ?
-                    styles['search-bar__placeholder--none']
+                return upward
+                    ? styles['search-bar__placeholder--none']
                     : [styles['search-bar__placeholder--top'], styles["search-bar__placeholder"]].join(' ');
             }
             if (placeholderPosition === PlaceholderPosition.center) {
