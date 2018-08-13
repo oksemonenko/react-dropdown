@@ -1,8 +1,9 @@
-import styles from './SearchBar.module.styl';
-import dropdownListStyles from '../DropdownList/DropdownList.module.styl';
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+
+import dropdownListStyles from '../DropdownList/DropdownList.module.styl'
 import {PlaceholderPosition} from '../../PlaceholderPosition'
+import styles from './SearchBar.module.styl'
 
 export default class SearchBar extends Component {
 
@@ -20,6 +21,15 @@ export default class SearchBar extends Component {
         open: PropTypes.func.isRequired,
         close: PropTypes.func.isRequired,
         toggle: PropTypes.func.isRequired
+    };
+
+    static defaultProps = {
+        filterText: '',
+        selectedOption: null,
+        placeholder: 'Select country',
+        placeholderPosition: PlaceholderPosition.center,
+        active: false,
+        upward: false
     };
 
     handleFilterTextChange = (e) => {

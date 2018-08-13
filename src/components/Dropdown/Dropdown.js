@@ -1,11 +1,13 @@
-import styles from './Dropdown.module.styl';
-import React, {Component} from 'react';
-import SearchBar from '../SearchBar/SearchBar';
-import DropdownList from '../DropdownList/DropdownList';
-import countries from '../../countries';
+import React, {Component} from 'react'
+
+import SearchBar from '../SearchBar/SearchBar'
+import DropdownList from '../DropdownList/DropdownList'
+import countries from '../../countries'
 import {PlaceholderPosition} from '../../PlaceholderPosition'
+import styles from './Dropdown.module.styl'
 
 export default class Dropdown extends Component {
+
     state = {
         filterText: '',
         selectedOption: null,
