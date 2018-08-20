@@ -1,37 +1,34 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
 import SearchBar from '../SearchBar/SearchBar'
 import DropdownList from '../DropdownList/DropdownList'
+import * as dropdownListActions from '../../actions/DropdownListActions'
+import * as searchBarActions from '../../actions/SearchBarActions'
 import countries from '../../countries'
 import {PlaceholderPosition} from '../../PlaceholderPosition'
 import styles from './Dropdown.module.styl'
 
-export default class Dropdown extends Component {
-
-    state = {
-        filterText: '',
-        selectedOption: null,
-        placeholder: 'Select country',
-        placeholderPosition: PlaceholderPosition.center,
-        active: false,
-        upward: false
-    };
+class Dropdown extends Component {
 
     handleFilterTextChange = (filterText) => {
-        this.setState({
-            filterText: filterText
-        })
+        const searchBarActions = this.props.searchBarActions;
+        searchBarActions.setFilterText(filterText);
     };
 
     handleOptionChange = (selectedOption) => {
-        this.setState({
-            selectedOption: selectedOption
-        }, () => { this.close() });
+        const dropdownListActions = this.props.dropdownListActions;
+
+        dropdownListActions.setSelectedOption(selectedOption)
+            .then(() => { this.close() });
     };
 
     toggle = () => {
         console.log(this);
-        (this.state.active ? this.close() : this.open());
+        const dropdownList = this.props.dropdownList;
+
+        (dropdownList.active ? this.close() : this.open());
     };
 
     open = () => {
@@ -42,7 +39,9 @@ export default class Dropdown extends Component {
     };
 
     close = () => {
-        this.state.selectedOption ?
+        const dropdownList = this.props.dropdownList;
+
+        dropdownList.selectedOption ?
             this.setPlaceholderPosition(null)
             : this.setPlaceholderPosition(PlaceholderPosition.center);
         this.hideDropdownList();
@@ -55,17 +54,16 @@ export default class Dropdown extends Component {
     };
 
     showDropdownList = () => {
-        this.setState({
-            active: true
-        });
+        const dropdownListActions = this.props.dropdownListActions;
+        dropdownListActions.setActiveTrue();
 
         this.setOpenDirection();
     };
 
     hideDropdownList = () => {
-        this.setState({
-            active: false
-        });
+        const dropdownListActions = this.props.dropdownListActions;
+        dropdownListActions.setActiveFalse();
+        dropdownListActions.setUpwardFalse();
     };
 
     setOpenDirection = () => {
@@ -81,62 +79,85 @@ export default class Dropdown extends Component {
 
         const upward = spaceAtTheBottom < 0 && spaceAtTheTop > spaceAtTheBottom;
 
-        if (!upward !== !this.state.upward) {
-            this.setState({
-                upward
-            }, () => { this.setPlaceholderPositionByState() });
+        if (!upward !== !this.props.dropdownList.upward) {
+            const dropdownListActions = this.props.dropdownListActions;
+            dropdownListActions.setUpwardTrue();
+            this.setPlaceholderPositionByState();
         }
         this.setPlaceholderPositionByState();
     };
 
     setDefaultFilter = () => {
-        this.setState({
-            filterText: ''
-        });
+        const searchBarActions = this.props.searchBarActions;
+        searchBarActions.setFilterText('');
     };
 
     setDefaultOption = () => {
-        this.setState({
-            selectedOption: null
-        });
+        const dropdownListActions = this.props.dropdownListActions;
+        dropdownListActions.setSelectedOption(null);
     };
 
     setPlaceholderPositionByState = () => {
-        this.setState({
-            placeholderPosition: (this.state.upward ? null : PlaceholderPosition.top)
-        });
+        const searchBarActions = this.props.searchBarActions;
+        const dropdownList = this.props.dropdownList;
+
+        if (dropdownList.upward) {
+            searchBarActions.setPlaceholderPosition(null);
+        } else {
+            searchBarActions.setPlaceholderPosition(PlaceholderPosition.top);
+        }
     };
 
     setPlaceholderPosition = (position) => {
-        this.setState({
-            placeholderPosition: position
-        });
+        const searchBarActions = this.props.searchBarActions;
+        searchBarActions.setPlaceholderPosition(position);
     };
 
     render() {
+        const {
+            dropdownList,
+            searchBar
+        } = this.props;
+
         return (
             <div className={styles.dropdown} id='dropdown'>
                 <SearchBar
-                    active={this.state.active}
-                    filterText={this.state.filterText}
+                    active={dropdownList.active}
+                    filterText={searchBar.filterText}
                     onFilterTextChange={this.handleFilterTextChange}
-                    option={this.state.selectedOption}
-                    placeholder={this.state.placeholder}
-                    placeholderPosition={this.state.placeholderPosition}
-                    upward={this.state.upward}
+                    option={dropdownList.selectedOption}
+                    placeholder={searchBar.placeholder}
+                    placeholderPosition={searchBar.placeholderPosition}
+                    upward={dropdownList.upward}
                     toggle={this.toggle}
                     open={this.open}
                     close={this.close}
                 />
                 <DropdownList
                     options={countries}
-                    filterText={this.state.filterText}
-                    option={this.state.selectedOption}
+                    filterText={searchBar.filterText}
+                    option={dropdownList.selectedOption}
                     onOptionChange={this.handleOptionChange}
-                    active={this.state.active}
-                    upward={this.state.upward}
+                    active={dropdownList.active}
+                    upward={dropdownList.upward}
                 />
             </div>
         )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        dropdownList: state.dropdownList,
+        searchBar: state.searchBar
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        dropdownListActions: bindActionCreators(dropdownListActions, dispatch),
+        searchBarActions: bindActionCreators(searchBarActions, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dropdown)
