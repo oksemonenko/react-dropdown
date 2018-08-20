@@ -25,7 +25,6 @@ class Dropdown extends Component {
     };
 
     toggle = () => {
-        console.log(this);
         const dropdownList = this.props.dropdownList;
 
         (dropdownList.active ? this.close() : this.open());
@@ -67,6 +66,17 @@ class Dropdown extends Component {
     };
 
     setOpenDirection = () => {
+        const upward  = this.isDropdownUpward();
+
+        if (!upward !== !this.props.dropdownList.upward) {
+            const dropdownListActions = this.props.dropdownListActions;
+            dropdownListActions.setUpwardTrue();
+            this.setPlaceholderPositionByState();
+        }
+        this.setPlaceholderPositionByState();
+    };
+
+    isDropdownUpward = () => {
         const dropdown = document.getElementById('dropdown');
         const dropdownList = document.getElementById('dropdownList');
         const dropdownRect = dropdown.getBoundingClientRect();
@@ -77,14 +87,7 @@ class Dropdown extends Component {
             document.documentElement.clientHeight - dropdownRect.top - dropdownRect.height - dropdownHeight;
         const spaceAtTheTop = dropdownRect.top - dropdownHeight;
 
-        const upward = spaceAtTheBottom < 0 && spaceAtTheTop > spaceAtTheBottom;
-
-        if (!upward !== !this.props.dropdownList.upward) {
-            const dropdownListActions = this.props.dropdownListActions;
-            dropdownListActions.setUpwardTrue();
-            this.setPlaceholderPositionByState();
-        }
-        this.setPlaceholderPositionByState();
+        return spaceAtTheBottom < 0 && spaceAtTheTop > spaceAtTheBottom;
     };
 
     setDefaultFilter = () => {
