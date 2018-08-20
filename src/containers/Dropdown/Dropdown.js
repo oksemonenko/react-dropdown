@@ -9,31 +9,8 @@ import * as searchBarActions from '../../actions/SearchBarActions'
 import countries from '../../countries'
 import {PlaceholderPosition} from '../../PlaceholderPosition'
 import styles from './Dropdown.module.styl'
-// import PropTypes from "prop-types";
 
 class Dropdown extends Component {
-
-    // static propTypes = {
-    //     filterText: PropTypes.string,
-    //     options: PropTypes.array,
-    //     active: PropTypes.bool,
-    //     upward: PropTypes.bool,
-    //     placeholder: PropTypes.string,
-    //     placeholderPosition: PropTypes.string,
-    //     selectedOption: PropTypes.shape({
-    //         name: PropTypes.string.isRequired,
-    //         code: PropTypes.string.isRequired
-    //     }),
-    // };
-
-    // static defaultProps = {
-    //     filterText: '',
-    //     selectedOption: null,
-    //     placeholder: 'Select country',
-    //     placeholderPosition: PlaceholderPosition.center,
-    //     active: false,
-    //     upward: false
-    // };
 
     handleFilterTextChange = (filterText) => {
         const searchBarActions = this.props.searchBarActions;
