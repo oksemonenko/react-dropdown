@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import Dropdown from '../Dropdown/Dropdown'
+import Dropdown from '../../containers/Dropdown/Dropdown'
 import styles from './App.module.styl'
 
 export default class App extends Component {
