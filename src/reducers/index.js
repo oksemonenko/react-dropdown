@@ -1,14 +1,8 @@
-import {PlaceholderPosition} from "../PlaceholderPosition";
+import {combineReducers} from 'redux'
+import dropdownList from './dropdownList'
+import searchBar from './searchBar'
 
-const initialState = {
-    filterText: '',
-    selectedOption: null,
-    placeholder: 'Select country',
-    placeholderPosition: PlaceholderPosition.center,
-    active: false,
-    upward: false
-};
-
-export default function userState(state = initialState) {
-    return state;
-}
+export default combineReducers({
+    dropdownList,
+    searchBar
+})
